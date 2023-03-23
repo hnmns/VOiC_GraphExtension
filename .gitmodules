@@ -1,0 +1,3 @@
+[submodule "VOiC"]
+	path = VOiC
+	url = https://github.com/AkhilKarri2002/VOiC.git
