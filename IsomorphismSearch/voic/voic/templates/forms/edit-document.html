@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="content-section">
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <div class="form-group">
+          {{ form.title.label(class="form-control-label") }}
+          {% if form.title.errors %}
+            {{ form.title(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.title.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.title(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.content.label(class="form-control-label") }}
+          {{ form.content }}
+          {% if form.content.errors %}
+            {{ form.content(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.content.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.graph.label(class="form-control-label") }}
+          <small class="text-muted">
+            <a href="{{ url_for('help') }}">What's this?</a>
+          </small>
+          {% if form.graph.errors %}
+            {{ form.graph(**{'data-toggle': 'tooltip', 'title': 'Enter each edge with two vertices in the format v1-v2,v2-v3.', 'class': 'form-control form-control-lg is-invalid', 'data-placement': 'right'}) }}
+            <div class="invalid-feedback">
+              {% for error in form.graph.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+              {{ form.graph(**{'data-toggle': 'tooltip', 'title': 'Enter each edge with two vertices in the format v1-v2,v2-v3.', 'class': 'form-control form-control-lg', 'data-placement': 'right'}) }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.roles.label(class="form-control-label") }}
+          {% if form.roles.errors %}
+            {{ form.roles(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.roles.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.roles(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.users.label(class="form-control-label") }}
+          {% if form.users.errors %}
+            {{ form.users(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.users.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.users(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+      </fieldset>
+      <div class="form-group">
+        {{ form.submit(class="btn btn-outline-primary") }}
+        <a class="btn btn-outline-danger mr-2" href="{{ url_for('home') }}">Cancel</a>
+      </div>
+    </form>
+    <div class="border-top pt-1">
+      <small class="text-muted">
+        *Sharing a document to everyone? Select the Employee role.
+      </small>
+    </div>
+  </div>
+  {{ ckeditor.load() }}
+  {% if request.MOBILE %}
+    {{ ckeditor.config(name='content', height=200, custom_config="allowedContent: true") }}
+  {% else %}
+    {{ ckeditor.config(name='content', height=500, custom_config="allowedContent: true") }}
+  {% endif %}
+{% endblock content %}

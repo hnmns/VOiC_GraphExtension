@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="content-section">
+    <div class="media">
+      <img class="rounded-circle account-img" src="{{ picture }}">
+      <div class="media-body">
+        <h2 class="display-4">{{ current_user.username }}</h2>
+        <p class="text-secondary">{{ current_user.email }}</p>
+      </div>
+    </div>
+    <form method="POST" action="" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-2">Your Account</legend>
+        <div class="form-group">
+          {{ form.username.label(class="form-control-label") }}
+          {% if form.username.errors %}
+            {{ form.username(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.username.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.username(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.email.label(class="form-control-label") }}
+          {% if form.email.errors %}
+            {{ form.email(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.email(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.picture.label() }}
+          {{ form.picture(class="form-control-file") }}
+          {% if form.picture.errors %}
+            {% for error in form.picture.errors %}
+              <span class="text-danger">{{ error }}</span>
+              <br />
+            {% endfor %}
+          {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.roles.label(class="form-control-label") }}
+            {% if form.roles.errors %}
+              {{ form.email(class="form-control form-control-lg is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.roles.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.roles(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.submit(class="btn btn-outline-primary") }}
+          <a class="btn btn-outline-danger mr-2" href="{{ url_for('home') }}">Cancel</a>
+        </div>
+        <div class="border-top pt-1">
+          <small class="text-muted">
+            *Why is Employee selected? All users are automatically assigned this role.
+          </small>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+  <div class="content-section">
+    <form>
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-2">Danger Zone</legend>
+        <div class="form-group">
+          <p class="form-control-label">In the Danger Zone you can irreversible delete your documents and account.</p>
+          <a class="btn btn-danger btn-sm mr-2" href="{{ url_for('danger_zone') }}">Open Danger Zone</a>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+{% endblock %}

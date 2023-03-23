@@ -1,0 +1,5 @@
+ernest>ernestjr,IsParentOf
+florida>ernestjr,HasHomeState
+florida,,State
+ernestjr,,Child
+ernest,,Parent

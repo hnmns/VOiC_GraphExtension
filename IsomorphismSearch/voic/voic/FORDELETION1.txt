@@ -1,0 +1,6 @@
+virginia>fiaa,HasExclusiveContinuing
+john>fiaa,IsParentOf
+first,third,purple
+fiaa,,Child
+john,,Parent
+virginia,,State
