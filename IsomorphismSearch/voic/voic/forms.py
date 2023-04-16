@@ -38,21 +38,6 @@ graph = r'(' + edge + r'(,|, ))*' + edge + r'$|^$'
 VALID_GRAPH = [Length(min=0, max=320), Regexp(graph)]
 VALID_SEARCH = [Length(min=0, max=320), Regexp(r'(^(?!graph:).*$)|(^graph:' + graph + r')')]
 
-# # Defining new fields? For dates and other such new data types
-# class TagListField(Field):
-#     widget = TextInput()
-
-#     def _value(self):
-#         if self.data:
-#             return u', '.join(self.data)
-#         else:
-#             return u''
-
-#     def process_formdata(self, valuelist):
-#         if valuelist:
-#             self.data = [x.strip() for x in valuelist[0].split(',')]
-#         else:
-#             self.data = []
 
 
 class SearchForm(flask_wtf.FlaskForm):
@@ -64,13 +49,16 @@ class SearchForm(flask_wtf.FlaskForm):
 ### Law Section ###
 ###################
 # Need a new form for each Law??? Yes, but can reuse the individual fields, like Today's Date.
-class CustodySearchForm(flask_wtf.FlaskForm):
+class CustodySearchForm(flask_wtf.FlaskForm): # Currently unused. Instead, just Bootstrap form with Javascript in the fill by form modal
+    
     date_today = DateField('Today\'s Date', validators=VALID_SEARCH)
     date_filed = DateField('Date Case Filed', validators=VALID_SEARCH)
-    submit = SubmitField('Custody Graph Search')
+    submitCustody = SubmitField('Custody Graph Search')
 
-
+##########################
 ### End of Law Section ###
+##########################
+
 
 class SignUpForm(flask_wtf.FlaskForm):
     username = StringField('Username', validators=VALID_USERNAME)

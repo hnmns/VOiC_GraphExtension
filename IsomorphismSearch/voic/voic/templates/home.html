@@ -4,7 +4,7 @@
   {% if current_user.is_authenticated %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     <h1>My Documents</h1>
-    <form method="POST" action="">
+    <form id="temp" method="POST" action="">
       {{ form.hidden_tag() }}
       <fieldset class="form-group">
         <div class="input-group rounded">
@@ -21,12 +21,14 @@
             {{ form.submit(class="btn btn-outline-primary mr-2") }}
 			<a class="btn btn-outline-primary mr-2" href="{{ url_for('new_document') }}">Create</a>
           {% endif %}
-			
+	</form>
 			<!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#FormModal">
 	Search by Form
 </button>
-  
+
+</fieldset>
+
 <div class="modal fade" id="FormModal" tabindex="-1" role="dialog" aria-labelledby="FormModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -39,49 +41,64 @@
 			</div>
 
 			<div class="modal-body">
-				<h5 class="modal-title" id="FormLawLabel">Title 20. Domestic Relations</h5>
 				<p><small id="headerHelp" class="text-muted">Enter information to automatically generate a search graph.</small></p>
+				<h5 class="modal-title" id="FormLawLabel">Title 20. Domestic Relations</h5>
 				
-				<form>
+				<form id="TheForm" name="TheForm">
 					<div class="form-group">
 						<div class="row">	
 							<div class="col">
 								<label for="Child">Child</label>
-								<input type="email" class="form-control" id="Child" aria-describedby="emailHelp" placeholder="Child name">
+								<input type="Child" class="form-control" id="Child" name="Child" aria-describedby="childHelp" placeholder="Child name">
 								<small id="childHelp" class="form-text text-muted">Subject of custody dispute</small>
 							</div>
 							<div class="col">
 								<label for="State">Current State</label>
-								<input type="State" class="form-control" id="State" placeholder="State of adjudication">
+								<input type="State" class="form-control" id="State" name="State" placeholder="State of adjudication">
 							</div>
 						</div>
 					</div>
-					<!-- <button id="old" type="button" class="btn btn-primary">Submit</button> -->
 
 					<div class="form-group">
 						<div class="row">	
 							<div class="col">
 								<label for="Parent1">Parent 1</label>
-								<input type="parent1" class="form-control" id="Parent1" placeholder="First Parent">
+								<input type="parent1" class="form-control" id="Parent1" name="Parent1" placeholder="First Parent">
 							</div>
 							<div class="col">
 								<label for="Parent2">Parent 2</label>
-								<input type="parent2" class="form-control" id="Parent2" placeholder="Second Parent">
+								<input type="parent2" class="form-control" id="Parent2" name="Parent2" placeholder="Second Parent">
 							</div>
 						</div>
 					</div>
-				</form>
-				</div>
-					<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" id="auto_string_btn" class="btn btn-primary">Submit</button>
+
+					<div class="form-group">
+						<div class="row">	
+							<div class="col">
+								<label for="startDate">Start date</label>
+								<input id="startDate" name="startDate" type="date" class="form-control">
+								<small id="startDateHelp" class="form-text text-muted">Date of child's arrival to current state</small>
+							</div>
+							<div class="col">
+								<label for="endDate">Current date</label>
+								<input id="endDate" name="endDate" type="date" class="form-control">
+							</div>
+						</div>
 					</div>
-				</div>
+
+					</div>
+						<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" id="auto_string_btn" class="btn btn-primary">Submit</button>
+						</div>
+					</div>
+
+				</form>
+
 			</div>
 		</div>
 	</div>
-      </fieldset>
-    </form>
+</div>
     {% for document in documents.items %}
       <article class="media content-section document-images">
         <div class="media-body">
@@ -166,36 +183,60 @@
     <a class="btn btn-outline-primary mb-5 btn-lg d-flex justify-content-center" href="{{ url_for('sign_up') }}">Try It Now</a>
   {% endif %}
 
-<!-- Script -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-	//alert(1);
-    $('#auto_string_btn').click(function(){
-		if ($('#Child').val()=="" && $('#Parent1').val()!=""){
-			alert("Parent 1 must have a child.");
-		} else{
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script>
+	jQuery.validator.setDefaults({
+		debug: true,
+		success: "valid"
+	});
+
+
+	var gform1 = $( "#TheForm" );
+	gform1.validate({
+		rules:{
+			Child: 'required',
+			Parent1: 'required'
+		}
+	});
+
+
+	$('#auto_string_btn').click(function(){
+		if (gform1.valid()){
 			var prepare_long_string = "graph:"; //
-
-			var residency_req_dict = {
-				"Michigan" : "One",
-				"Virginia" : "Two",
+			const residency_req_dict = {
+				"Michigan" : 183,
+				"Virginia" : 183,
+				"Idaho" : 270,
+				"Hawaii" : 200,
+				// Add a wildcard default of 183 days??
 			};
-			
 
-			prepare_long_string = prepare_long_string + $('#Child').val();
+			var start = $('#startDate').val();
+			var end = $('#endDate').val();
+			const Start = new Date(start);
+			const End = new Date(end);
+			console.log(End);
+			// end - start returns difference in milliseconds 
+
+			var Diff = new Date(End - Start);
+			console.log(Date(Diff));
+
+			// get days
+			var Days = Diff/1000/60/60/24;
+
+			prepare_long_string = prepare_long_string + $('#Child').val() + Days;
 
 			$('#search_bar').val(prepare_long_string);
+			// $("form[name='#TheForm']").validate();
 			$('#FormModal').modal('hide');
 		}
-    });
-});
-
+		else{
+			
+		}
+	});
 
 </script>
 
-
 {% endblock %}
-
-
