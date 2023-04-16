@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-section">
+	<fieldset class="group">
+	<legend class="border-bottom mb-2">Fill by Form</legend>
+	dink
+	<br>
+	{{ form.hidden_tag() }}
+	<div class="group">
+		{{ form.date_today.label(class="form-control-label") }}
+		{% if form.date_today.errors %}
+			{{ form.date_today(class="form-control form-control-lg is-invalid") }}
+			<div class="invalid-feedback">
+			{% for error in form.date_today.errors %}
+				<span>{{ error }}</span>
+			{% endfor %}
+			</div>
+		{% else %}
+			{{ form.date_today(class="form-control form-control-lg") }}
+		{% endif %}
+	</div>
+
+	<br>
+	<a class="btn btn-outline-primary" href="{{ url_for('home') }}">Home</a>
+
+  </div>
+
+{% endblock %}

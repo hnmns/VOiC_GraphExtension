@@ -35,6 +35,11 @@
           <small class="text-muted">
             <a href="{{ url_for('help') }}">What's this?</a>
           </small>
+		  <!-- NEW: Button to go to Graph Fill Form -->
+		  <div class="form-group"> 
+			<!-- {{ form.submit(class="btn btn-outline-primary") }} -->
+			<a class="btn btn-outline-primary mr-2" href="{{ url_for('home') }}">Fill by Form</a>
+		  </div>
           {% if form.graph.errors %}
             {{ form.graph(**{'data-toggle': 'tooltip', 'title': 'Enter each edge with two vertices in the format v1-v2,v2-v3.', 'class': 'form-control form-control-lg is-invalid', 'data-placement': 'right'}) }}
             <div class="invalid-feedback">

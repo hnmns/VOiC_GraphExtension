@@ -130,8 +130,11 @@ def home(): # The "logic" for the dashboard?
         )
 
         # Create search form
-        from voic.forms import SearchForm
+        from voic.forms import SearchForm, CustodySearchForm
         form = SearchForm()
+		### HERE, add all other forms for different pages?
+		### How to choose where the form is rendered on page???
+
 
         # If the form is submitted, get all documents matching the search
         if form.validate_on_submit():
@@ -334,6 +337,34 @@ def new_document():
 
     # Render the empty document form for the new document
     return flask.render_template('forms/edit-document.html', title='New Document', form=form)
+
+
+## New Route to manage what happens on the Graph Form page when entered from Home/Dashboard
+@app.route('/graph-form', methods=['GET', 'POST'])
+# @flask_login.login_required
+def graph_form():
+    # Generate a form for creating graphs (for searching, later also populating document graphs)
+    from voic.forms import CustodySearchForm # Later, needs to import ALL SearchForms for each law
+    form = CustodySearchForm() # Switch/ifelse to choose which law based on dropdown???
+
+    # Fill embedded graph with whatever pops out of this whole thing.
+    # form.content.data = "<document-graph hidden=\"\"></document-graph>"
+
+    # If the form is submitted
+    if form.validate_on_submit():
+        # document = models.Document()
+        # save_document(document, form)
+        flask.flash('Your graph was generated.', 'success')
+
+		# if ():
+        ## Redirect to the home page
+        return flask.redirect(flask.url_for('home'))
+		## Or, redirect to the document editor if we came from there.
+        # return flask.redirect(flask.url_for('home'))
+
+    ### Need to render the Home page again but with the search bar populated
+	### Or, populate the document editor.
+    return flask.render_template('forms/graph-form.html', title='Graph Form', form=form)
 
 
 @app.route('/edit-document/<int:document_id>', methods=['GET', 'POST'])

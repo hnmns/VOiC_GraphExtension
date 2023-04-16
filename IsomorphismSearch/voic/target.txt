@@ -1,3 +1,7 @@
-ohio>wahoo,HasHomeState
-ohio,,State
-wahoo,,Child
+ernest>ernestjr,IsParentOf
+michigan>ernestjr,HasExclusiveContinuing
+frieda>ernestjr,IsParentOf
+ernest,,Parent
+frieda,,Parent
+ernestjr,,Child
+michigan,,State

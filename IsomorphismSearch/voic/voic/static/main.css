@@ -8,6 +8,10 @@ h1, h2, h3, h4, h5, h6 {
   color: #444655;
 }
 
+.modal-title {
+	font-weight: bold;
+}
+
 .document-images img {
   max-width: 100%;
   max-height: 500px;

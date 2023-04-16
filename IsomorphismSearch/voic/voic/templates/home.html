@@ -19,9 +19,67 @@
           {% else %}
             {{ form.search_bar(**{'data-toggle': 'tooltip', 'title': 'Precede your search with graph: to perform a graph search.', 'class': 'form-control rounded mr-2', 'data-placement': 'right'}) }}
             {{ form.submit(class="btn btn-outline-primary mr-2") }}
-            <a class="btn btn-outline-primary mr-2" href="{{ url_for('new_document') }}">Create</a>
+			<a class="btn btn-outline-primary mr-2" href="{{ url_for('new_document') }}">Create</a>
           {% endif %}
-        </div>
+			
+			<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#FormModal">
+	Search by Form
+</button>
+  
+<div class="modal fade" id="FormModal" tabindex="-1" role="dialog" aria-labelledby="FormModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h4 class="modal-title" id="FormModalLabel">Search by Form</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<div class="modal-body">
+				<h5 class="modal-title" id="FormLawLabel">Title 20. Domestic Relations</h5>
+				<p><small id="headerHelp" class="text-muted">Enter information to automatically generate a search graph.</small></p>
+				
+				<form>
+					<div class="form-group">
+						<div class="row">	
+							<div class="col">
+								<label for="Child">Child</label>
+								<input type="email" class="form-control" id="Child" aria-describedby="emailHelp" placeholder="Child name">
+								<small id="childHelp" class="form-text text-muted">Subject of custody dispute</small>
+							</div>
+							<div class="col">
+								<label for="State">Current State</label>
+								<input type="State" class="form-control" id="State" placeholder="State of adjudication">
+							</div>
+						</div>
+					</div>
+					<!-- <button id="old" type="button" class="btn btn-primary">Submit</button> -->
+
+					<div class="form-group">
+						<div class="row">	
+							<div class="col">
+								<label for="Parent1">Parent 1</label>
+								<input type="parent1" class="form-control" id="Parent1" placeholder="First Parent">
+							</div>
+							<div class="col">
+								<label for="Parent2">Parent 2</label>
+								<input type="parent2" class="form-control" id="Parent2" placeholder="Second Parent">
+							</div>
+						</div>
+					</div>
+				</form>
+				</div>
+					<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" id="auto_string_btn" class="btn btn-primary">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
       </fieldset>
     </form>
     {% for document in documents.items %}
@@ -107,4 +165,37 @@
     </p>
     <a class="btn btn-outline-primary mb-5 btn-lg d-flex justify-content-center" href="{{ url_for('sign_up') }}">Try It Now</a>
   {% endif %}
+
+<!-- Script -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	//alert(1);
+    $('#auto_string_btn').click(function(){
+		if ($('#Child').val()=="" && $('#Parent1').val()!=""){
+			alert("Parent 1 must have a child.");
+		} else{
+
+			var prepare_long_string = "graph:"; //
+
+			var residency_req_dict = {
+				"Michigan" : "One",
+				"Virginia" : "Two",
+			};
+			
+
+			prepare_long_string = prepare_long_string + $('#Child').val();
+
+			$('#search_bar').val(prepare_long_string);
+			$('#FormModal').modal('hide');
+		}
+    });
+});
+
+
+</script>
+
+
 {% endblock %}
+
+
