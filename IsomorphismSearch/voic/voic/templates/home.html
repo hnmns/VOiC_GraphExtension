@@ -53,7 +53,7 @@
 								<small id="childHelp" class="form-text text-muted">Subject of custody dispute</small>
 							</div>
 							<div class="col">
-								<label for="State">Current State</label>
+								<label for="State">Child's current state</label>
 								<input type="State" class="form-control" id="State" name="State" placeholder="State of adjudication">
 							</div>
 						</div>
@@ -64,10 +64,25 @@
 							<div class="col">
 								<label for="Parent1">Parent 1</label>
 								<input type="parent1" class="form-control" id="Parent1" name="Parent1" placeholder="First Parent">
+								<small id="parent1Help" class="form-text text-muted">Claimant</small>
 							</div>
+							<div class="col">
+								<label for="parent1State">Parent 1 State</label>
+								<input type="State" class="form-control" id="parent1State" name="parent1State" placeholder="State of residency for parent 1">
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="row">	
 							<div class="col">
 								<label for="Parent2">Parent 2</label>
 								<input type="parent2" class="form-control" id="Parent2" name="Parent2" placeholder="Second Parent">
+								<small id="parent2Help" class="form-text text-muted">Respondent</small>
+							</div>
+							<div class="col">
+								<label for="parent2State">Parent 2 State</label>
+								<input type="State" class="form-control" id="parent2State" name="parent2State" placeholder="State of residency for parent 2">
 							</div>
 						</div>
 					</div>
@@ -86,6 +101,19 @@
 						</div>
 					</div>
 
+					<div class="form-group">
+						<div class="row">	
+							<div class="col">
+								<label for="filedState">State where filed</label>
+								<input id="filedState" name="filedState" type="state" class="form-control">
+								<small id="filedStateHelp" class="form-text text-muted">State where case was filed</small>
+							</div>
+							
+
+
+						</div>
+					</div>
+
 					</div>
 						<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -99,6 +127,7 @@
 		</div>
 	</div>
 </div>
+
     {% for document in documents.items %}
       <article class="media content-section document-images">
         <div class="media-body">
@@ -192,19 +221,52 @@
 		success: "valid"
 	});
 
+	jQuery.validator.addMethod("lessThan", 
+	function(value, element, params) {
+		// console.log($(params).val().length);
+		if($(params).val().length==0){
+			return true;
+		}
+		if (!/Invalid|NaN/.test(new Date(value))) {
+			return new Date(value) < new Date($(params).val());
+		}
+
+		return isNaN(value) && isNaN($(params).val()) 
+			|| (Number(value) < Number($(params).val())); 
+	},'Must be before current date.');
+
 
 	var gform1 = $( "#TheForm" );
+	gform1.rules('add', { greaterThan: "#startDate" });
 	gform1.validate({
 		rules:{
 			Child: 'required',
-			Parent1: 'required'
+			State: 'required',
+			startDate: {
+				required: function(element) {
+					return $("#endDate").val().length!=0;
+				},
+				lessThan: "#endDate"
+			},
+			endDate: {
+				required: function(element) {
+					return $("#startDate").val().length!=0;
+				}
+			},
+			Parent1: {
+				required: function(element) {
+					return $("#parent1State").val().length!=0;
+				}
+			}
 		}
 	});
+	
 
 
 	$('#auto_string_btn').click(function(){
 		if (gform1.valid()){
 			var prepare_long_string = "graph:"; //
+
 			const residency_req_dict = {
 				"Michigan" : 183,
 				"Virginia" : 183,
@@ -221,16 +283,13 @@
 			// end - start returns difference in milliseconds 
 
 			var Diff = new Date(End - Start);
-			console.log(Date(Diff));
-
-			// get days
+			// console.log(Date(Diff));
 			var Days = Diff/1000/60/60/24;
 
 			prepare_long_string = prepare_long_string + $('#Child').val() + Days;
 
-			$('#search_bar').val(prepare_long_string);
-			// $("form[name='#TheForm']").validate();
 			$('#FormModal').modal('hide');
+			$('#search_bar').val(prepare_long_string.toLowerCase());
 		}
 		else{
 			
