@@ -1,7 +1,5 @@
-ernest>ernestjr,IsParentOf
-michigan>ernestjr,HasExclusiveContinuing
-frieda>ernestjr,IsParentOf
-ernest,,Parent
-frieda,,Parent
-ernestjr,,Child
-michigan,,State
+Ernest>ErnestJr,IsParentOf
+Ernest>ErnestJr,IsClaimantOf
+Ernest>thing2,HasExclusiveContinuing
+Ernest,,Parent
+ErnestJr,,Child

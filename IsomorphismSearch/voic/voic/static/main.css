@@ -9,12 +9,30 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .modal-title {
-	font-weight: bold;
+	font-weight: bolder;
+	text-decoration: underline;
 }
 
 .error {
 	color: red;
 	/* background-color: #acf; */
+ }
+
+.lab {
+	padding-top: 10px;
+}
+
+ .gform-group {
+	padding-top: 15px;
+ }
+
+ /* .gform-group :nth-child(2n){
+	padding-top: 0.25cm;
+	background-color: #a8aabc;
+ } */
+
+ label {
+	font-weight: bold;
  }
 
 .document-images img {

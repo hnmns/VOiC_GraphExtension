@@ -45,7 +45,7 @@
 				<h5 class="modal-title" id="FormLawLabel">Title 20. Domestic Relations</h5>
 				
 				<form id="TheForm" name="TheForm">
-					<div class="form-group">
+					<div class="form-group gform-group">
 						<div class="row">	
 							<div class="col">
 								<label for="Child">Child</label>
@@ -53,41 +53,18 @@
 								<small id="childHelp" class="form-text text-muted">Subject of custody dispute</small>
 							</div>
 							<div class="col">
-								<label for="State">Child's current state</label>
-								<input type="State" class="form-control" id="State" name="State" placeholder="State of adjudication">
+								<label for="childState">Child's current state</label>
+								<select class="form-control" id="childState" name="childState">
+									<option value="0">Select a state</option>
+									<option value="1">Florida</option>
+									<option value="2">Michigan</option>
+									<option value="3">Virginia</option>
+								</select>
 							</div>
 						</div>
 					</div>
 
-					<div class="form-group">
-						<div class="row">	
-							<div class="col">
-								<label for="Parent1">Parent 1</label>
-								<input type="parent1" class="form-control" id="Parent1" name="Parent1" placeholder="First Parent">
-								<small id="parent1Help" class="form-text text-muted">Claimant</small>
-							</div>
-							<div class="col">
-								<label for="parent1State">Parent 1 State</label>
-								<input type="State" class="form-control" id="parent1State" name="parent1State" placeholder="State of residency for parent 1">
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">	
-							<div class="col">
-								<label for="Parent2">Parent 2</label>
-								<input type="parent2" class="form-control" id="Parent2" name="Parent2" placeholder="Second Parent">
-								<small id="parent2Help" class="form-text text-muted">Respondent</small>
-							</div>
-							<div class="col">
-								<label for="parent2State">Parent 2 State</label>
-								<input type="State" class="form-control" id="parent2State" name="parent2State" placeholder="State of residency for parent 2">
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
+					<div class="form-group gform-group">
 						<div class="row">	
 							<div class="col">
 								<label for="startDate">Start date</label>
@@ -101,18 +78,84 @@
 						</div>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group gform-group border-top">
 						<div class="row">	
 							<div class="col">
-								<label for="filedState">State where filed</label>
-								<input id="filedState" name="filedState" type="state" class="form-control">
-								<small id="filedStateHelp" class="form-text text-muted">State where case was filed</small>
+								<label for="Parent1">Parent 1</label>
+								<input type="parent1" class="form-control" id="Parent1" name="Parent1" placeholder="Claimant">
 							</div>
-							
-
-
+							<div class="col">
+								<label for="parent1State">Parent 1 State</label>
+								<select class="form-control" id="parent1State" name="parent1State">
+									<option value="0">Select a state</option>
+									<option value="1">Florida</option>
+									<option value="2">Michigan</option>
+									<option value="3">Virginia</option>
+								</select>
+							</div>
+						</div>
+						<div class="row">	
+							<div class="col">
+								<label class="lab" for="parent1Jurisdiction">Case 1's claimed jurisdiction</label>
+								<select class="form-control" id="parent1Jurisdiction" name="parent1Jurisdiction">
+									<option value="0">Select a jurisdiction</option>
+									<option value="1">Home state</option>
+									<option value="2">Exclusive, continuing</option>
+								</select>
+								<small id="parent1JurisdictionHelp" class="form-text text-muted">Jurisdiction for parent 1's case</small>
+							</div>
 						</div>
 					</div>
+
+					<div class="form-group gform-group border-top">
+						<div class="row">	
+							<div class="col">
+								<label for="Parent2">Parent 2</label>
+								<input type="parent2" class="form-control" id="Parent2" name="Parent2" placeholder="Respondent">
+							</div>
+							<div class="col">
+								<label for="parent2State">Parent 2 State</label>
+								<select class="form-control" id="parent2State" name="parent2State">
+									<option value="">Select a state</option>
+									<option value="1">Florida</option>
+									<option value="2">Michigan</option>
+									<option value="3">Virginia</option>
+								</select>
+							</div>
+						</div>
+					
+						<div class="row">	
+							<div class="col">
+								<label class="lab" for="parent2Jurisdiction">Case 2's claimed jurisdiction</label>
+								<select class="form-control" id="parent2Jurisdiction" name="parent2Jurisdiction">
+									<option value="0">Select a jurisdiction</option>
+									<option value="1">Home state</option>
+									<option value="2">Exclusive, continuing</option>
+								</select>
+								<small id="parent2JurisdictionHelp" class="form-text text-muted">Jurisdiction for parent 2's case</small>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group gform-group border-top">
+						<div class="row">	
+							<div class="col">
+								<label class="form-check-label" for="checks">
+									Jurisdiction retained in:
+								</label>
+								<div class="form-check">
+									<input id="checkParentNA" name="checkParent" class="form-check-input" type="radio" value="0" checked> N/A
+								</div>
+								<div class="form-check">
+									<input id="checkParent1" name="checkParent" class="form-check-input" type="radio" value="1"> Parent 1's case
+								</div>
+								<div class="form-check">
+									<input id="checkParent2" name="checkParent" class="form-check-input" type="radio" value="2"> Parent 2's case
+								</div>
+							</div>
+						</div>
+					</div>
+
 
 					</div>
 						<div class="modal-footer">
@@ -221,27 +264,52 @@
 		success: "valid"
 	});
 
-	jQuery.validator.addMethod("lessThan", 
-	function(value, element, params) {
-		// console.log($(params).val().length);
-		if($(params).val().length==0){
-			return true;
-		}
-		if (!/Invalid|NaN/.test(new Date(value))) {
-			return new Date(value) < new Date($(params).val());
-		}
+	jQuery.validator.addMethod("lessThan",  // Checking valid start/end dates
+		function(value, element, params) {
+			// console.log($(params).val().length);
+			if($(params).val().length==0){
+				return true;
+			}
+			if (!/Invalid|NaN/.test(new Date(value))) {
+				return new Date(value) < new Date($(params).val());
+			}
 
-		return isNaN(value) && isNaN($(params).val()) 
-			|| (Number(value) < Number($(params).val())); 
-	},'Must be before current date.');
+			return isNaN(value) && isNaN($(params).val()) 
+				|| (Number(value) < Number($(params).val())); 
+		},
+		'Must be before current date.' // Error message
+	);
+
+	jQuery.validator.addMethod("parentJurisdictionEntered", 
+		function(value, element, params) {
+			if ($('input[name=checkParent]:checked', "#TheForm").val()==0){ // N/As
+				// console.log("OK, N/A");
+				return true;
+			}
+			else if ($('input[name=checkParent]:checked', "#TheForm").val()==1){ // Parent 1's jurisdiction chosen
+				if ($(params[0]).val().length!=0 && $(params[1]).val()!=0 && $(params[2]).val()!=0){
+					return true;
+				} else {
+					return false;
+				}
+			}
+			else if ($('input[name=checkParent]:checked', "#TheForm").val()==2){ // Parent 2's jurisdiction chosen
+				if ($(params[3]).val().length!=0 && $(params[4]).val()!=0 && $(params[5]).val()!=0){
+					return true;
+				} else {
+					return false;
+				}
+			}
+		},
+		'Select N/A if missing parent, their state of residence, and/or their claimed jurisdiction.'
+	);
 
 
 	var gform1 = $( "#TheForm" );
-	gform1.rules('add', { greaterThan: "#startDate" });
 	gform1.validate({
 		rules:{
 			Child: 'required',
-			State: 'required',
+			childState: 'required',
 			startDate: {
 				required: function(element) {
 					return $("#endDate").val().length!=0;
@@ -257,17 +325,29 @@
 				required: function(element) {
 					return $("#parent1State").val().length!=0;
 				}
+			},
+			checkParent: {
+				parentJurisdictionEntered: ["#Parent1","#parent1State","#parent1Jurisdiction","#Parent2","#parent2State","#parent2Jurisdiction"]
 			}
 		}
 	});
-	
 
+
+	function formatVEV(v1, e, v2, v1type="val", v2type="val") {
+		if (v1type=="text"){
+			V1 = $(v1).text();
+		} else {V1 = $(v1).val();}
+		if (v2type=="text"){
+			V2 = $(v2).text();
+		} else {V2 = $(v2).val();}
+
+		return "," + V1 + "-" + e + "-" + V2;
+	}
 
 	$('#auto_string_btn').click(function(){
 		if (gform1.valid()){
-			var prepare_long_string = "graph:"; //
-
 			const residency_req_dict = {
+				"Florida" : 183,
 				"Michigan" : 183,
 				"Virginia" : 183,
 				"Idaho" : 270,
@@ -279,20 +359,66 @@
 			var end = $('#endDate').val();
 			const Start = new Date(start);
 			const End = new Date(end);
-			console.log(End);
 			// end - start returns difference in milliseconds 
-
 			var Diff = new Date(End - Start);
 			// console.log(Date(Diff));
 			var Days = Diff/1000/60/60/24;
 
-			prepare_long_string = prepare_long_string + $('#Child').val() + Days;
+			////////////////////////////
+			// Put the graph together //
+			////////////////////////////
+			var prep_string = "graph:"; // Build graph search string from here
 
+			prep_string = prep_string + $('#Child').val() + "-LivesIn-" + $('#childState :selected').text();
+
+			if (Days >= residency_req_dict[$('#childState :selected').text()]) {
+				// prep_string = prep_string + "," + $('#childState :selected').text() + "-IsResidenceOf-" + $('#Child').val();
+				prep_string = prep_string + formatVEV('#Child', "IsResidentOf", '#childState :selected', v1type="val", v2type="text");
+			}
+
+			// Parents
+			juris_dict = {1:"HasHomeState", 2:"HasExclusiveContinuing"};
+			if ($('#Parent1').val().length!=0){
+				prep_string = prep_string + formatVEV('#Parent1', "IsParentOf", '#Child');
+				prep_string = prep_string + formatVEV('#Parent1', "IsClaimantOf", '#Child');
+				if ($('#parent1State').val()!=0){
+					prep_string = prep_string + formatVEV('#Parent1', "IsFrom", '#parent1State option:selected', v1type="val", v2type="text");
+					if ($('#parent1Jurisdiction :selected').val()!=0){
+						var jurisdiction1 = juris_dict[$('#parent1Jurisdiction :selected').val()];
+						prep_string = prep_string + formatVEV('#Parent1', jurisdiction1, '#Child', v1type="val", v2type="val");
+						console.log($('input[name=checkParent]:checked', '#TheForm').val());
+						if ($('input[name=checkParent]:checked', '#TheForm').val()=="1"){
+							prep_string = prep_string + formatVEV('#Parent1', "RetainsJurisdictionOver", '#Child', v1type="val", v2type="val");
+						}
+					}
+				}
+			}
+
+			if ($('#Parent2').val().length!=0){
+				prep_string = prep_string + formatVEV('#Parent2', "IsParentOf", '#Child');
+				prep_string = prep_string + formatVEV('#Parent2', "IsRespondentOf", '#Child');
+				if ($('#parent2State').val()!=0){
+					prep_string = prep_string + formatVEV('#Parent2', "IsFrom", '#parent2State :selected', v1type="val", v2type="text");
+					if ($('#parent2Jurisdiction :selected').val()!=0){
+						var jurisdiction2 = juris_dict[$('#parent2Jurisdiction :selected').val()];
+						prep_string = prep_string + formatVEV('#Parent2', jurisdiction2, '#Child', v1type="val", v2type="val");
+						if ($('input[name=checkParent]:checked', '#TheForm').val()=="2"){
+							prep_string = prep_string + formatVEV('#Parent2', "RetainsJurisdictionOver", '#Child', v1type="val", v2type="val");
+						}
+					}
+				}
+			}
+
+			////////////////////////////////////
+			// Submit/paste to the search bar //
+			////////////////////////////////////
 			$('#FormModal').modal('hide');
-			$('#search_bar').val(prepare_long_string.toLowerCase());
+			// $('#search_bar').val(prep_string.toLowerCase());
+			$('#search_bar').val(prep_string); // Do not want edges put to lowercase...
+
 		}
 		else{
-			
+			// Does anything even need to go here???
 		}
 	});
 

@@ -1,3 +1,4 @@
-ernest>ernestjr,IsParentOf
-ernestjr,,Child
-ernest,,Parent
+Dad>Son,IsParentOf
+Dad>Son,IsClaimantOf
+Dad,,Parent
+Son,,Child
