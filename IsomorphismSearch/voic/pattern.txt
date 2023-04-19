@@ -1,4 +1,11 @@
-Dad>Son,IsParentOf
-Dad>Son,IsClaimantOf
-Dad,,Parent
-Son,,Child
+Papa1>Chico,IsParentOf
+Papa1>Michigan,IsFrom
+Papa1>Chico,RetainsJurisdictionOver
+Papa2>Chico,IsParentOf
+Papa2>Florida,IsFrom
+Papa2>Chico,HasHomeState
+Florida,,State
+Papa2,,Parent
+Chico,,Child
+Michigan,,State
+Papa1,,Parent

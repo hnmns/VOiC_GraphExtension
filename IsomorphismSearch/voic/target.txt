@@ -1,5 +1,11 @@
-Ernest>ErnestJr,IsParentOf
-Ernest>ErnestJr,IsClaimantOf
-Ernest>thing2,HasExclusiveContinuing
-Ernest,,Parent
-ErnestJr,,Child
+Parentoid1>Weebob,IsParentOf
+Parentoid1>Ohio,IsFrom
+Parentoid1>Weebob,HasHomeState
+Parentoid2>Weebob,IsParentOf
+Parentoid2>Virginia,IsFrom
+Parentoid1>Weebob,RetainsJurisdictionOver
+Parentoid1,,Parent
+Weebob,,Child
+Ohio,,State
+Parentoid2,,Parent
+Virginia,,State
