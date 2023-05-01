@@ -1,13 +1,19 @@
 {% extends "base.html" %}
 
+
 {% block content %}
+
   {% if current_user.is_authenticated %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     <h1>My Documents</h1>
+	
     <form id="temp" method="POST" action="">
       {{ form.hidden_tag() }}
       <fieldset class="form-group">
         <div class="input-group rounded">
+			<button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#FormModal">
+				Fill by Form
+			</button>
           {% if form.search_bar.errors %}
             {{ form.search_bar(**{'data-toggle': 'tooltip', 'title': 'Precede your search with graph: to perform a graph search.', 'class': 'form-control rounded mr-2 is-invalid', 'data-placement': 'right'}) }}
             {{ form.submit(class="btn btn-outline-primary mr-2") }}
@@ -22,10 +28,7 @@
 			<a class="btn btn-outline-primary mr-2" href="{{ url_for('new_document') }}">Create</a>
           {% endif %}
 	</form>
-			<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#FormModal">
-	Search by Form
-</button>
+
 
 </fieldset>
 
@@ -34,7 +37,7 @@
 		<div class="modal-content">
 
 			<div class="modal-header">
-				<h4 class="modal-title" style="text-decoration: none" id="FormModalLabel">Search by Form</h4>
+				<h3 class="modal-title" style="text-decoration: none" id="FormModalLabel">Search by Form</h3>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -42,9 +45,30 @@
 
 			<div class="modal-body">
 				<p><small id="headerHelp" class="text-muted">Enter information to automatically generate a search graph.</small></p>
-				<h5 class="modal-title" id="FormLawLabel">Title 20. Domestic Relations</h5>
+				<h4 class="modal-title" style="text-decoration: none" id="FormLawLabel">Title 20. Domestic Relations</h4>
 				
 				<form id="TheForm" name="TheForm">
+					<!-- <div class="form-group gform-group">
+						<h5 class="modal-title" id="childSection">Child</h5>
+						<div class="row">
+							<div class="col">
+								<label for="ex1">Ex1</label>
+								<div class="form-check">	
+									<input type="radio" class="form-check-input" id="ex1a" name="ex1" onclick="exFunction()" value="0">a
+								</div>
+								<div class="form-check">
+									<input type="radio" class="form-check-input" id="ex1b" name="ex1" onclick="exFunction()" value="1">b
+								</div>
+							</div>
+
+							<div class="col">
+								<label for="ex2">Ex2</label>
+								<input class="form-control" id="ex2" name="ex2" placeholder="Ex2">
+							</div>
+						</div>
+					</div> -->
+
+
 					<div class="form-group gform-group">
 						<div class="row">	
 							<div class="col">
@@ -52,6 +76,16 @@
 								<input type="Child" class="form-control" id="Child" name="Child" aria-describedby="childHelp" placeholder="Child name">
 								<small id="childHelp" class="form-text text-muted">Subject of custody dispute</small>
 							</div>
+							
+							<div class="col">
+								<label for="endDate">Current date</label>
+								<input id="endDate" name="endDate" type="date" class="form-control" onchange="jurisFunction()">
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group gform-group">
+						<div class="row">	
 							<div class="col">
 								<label for="childState">Child's current state</label>
 								<select class="form-control" id="childState" name="childState">
@@ -61,40 +95,69 @@
 									<option value="3">Virginia</option>
 								</select>
 							</div>
+							<div class="col">
+								<label for="startDate">Current state arrival date</label>
+								<input id="startDate" name="startDate" type="date" class="form-control" onchange="jurisFunction()">
+								<small id="startDateHelp" class="form-text text-muted">Date of child's arrival to current state</small>
+							</div>
 						</div>
 					</div>
 
 					<div class="form-group gform-group">
-						<div class="row">	
+						<div class="row">
 							<div class="col">
-								<label for="startDate">Start date</label>
-								<input id="startDate" name="startDate" type="date" class="form-control">
-								<small id="startDateHelp" class="form-text text-muted">Date of child's arrival to current state</small>
-							</div>
-							<div class="col">
-								<label for="endDate">Current date</label>
-								<input id="endDate" name="endDate" type="date" class="form-control">
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group gform-group border-top">
-						<div class="row">	
-							<div class="col">
-								<label for="Parent1">Parent 1</label>
-								<input type="parent1" class="form-control" id="Parent1" name="Parent1" placeholder="Claimant">
-							</div>
-							<div class="col">
-								<label for="parent1State">Parent 1 State</label>
-								<select class="form-control" id="parent1State" name="parent1State">
+								<label for="childPrevState">Child's previous state</label>
+								<select class="form-control" id="childPrevState" name="childPrevState">
 									<option value="0">Select a state</option>
 									<option value="1">Florida</option>
 									<option value="2">Michigan</option>
 									<option value="3">Virginia</option>
 								</select>
 							</div>
+							<div class="col">
+								<label for="startPrevDate">Previous state arrival date</label>
+								<input id="startPrevDate" name="startPrevDate" type="date" class="form-control" onchange="jurisFunction()">
+								<small id="startPrevDateHelp" class="form-text text-muted">Date of child's arrival to previous state</small>
+							</div>
 						</div>
+					</div>
+
+					<div class="form-group gform-group">
+						<div class="row">
+							<div class="col">
+								<label for="ex3">Exclusive, continuing jurisdiction valid in:</label>
+								<input disabled class="form-control disabled" id="ex3" name="ex3">
+							</div>
+						</div>
+					</div>
+
+
+					<div class="form-group gform-group border-top">
+						<h5 class="modal-title" id="parent1Section">Parent 1</h5>
 						<div class="row">	
+							<div class="col">
+								<label for="Parent1">Name</label>
+								<input type="parent1" class="form-control" id="Parent1" name="Parent1" placeholder="Claimant">
+							</div>
+							<div class="col">
+								<label for="parent1Status">Status</label>
+								<select class="form-control" id="parent1Status" name="parent1Status">
+									<option value="0">N/A</option>
+									<option value="1">Claimant</option>
+									<option value="2">Respondent</option>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<label class="lab" for="parent1State">State</label>
+								<select class="form-control" id="parent1State" name="parent1State" onchange="jurisFunction()">
+									<option value="0">Select a state</option>
+									<option value="1">Florida</option>
+									<option value="2">Michigan</option>
+									<option value="3">Virginia</option>
+								</select>
+							</div>
 							<div class="col">
 								<label class="lab" for="parent1Jurisdiction">Case 1's claimed jurisdiction</label>
 								<select class="form-control" id="parent1Jurisdiction" name="parent1Jurisdiction">
@@ -105,16 +168,37 @@
 								<small id="parent1JurisdictionHelp" class="form-text text-muted">Jurisdiction for parent 1's case</small>
 							</div>
 						</div>
+						<div class="row">
+							<div class="col">
+
+								<label class="form-check-label" for="checks">Case 1 retains jurisdiction?</label>
+								<div class="form-check">
+									<input id="checkParent1" name="checkParent" class="form-check-input" type="radio" value="1"> Jurisdiction retained
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<div class="form-group gform-group border-top">
+						<h5 class="modal-title" id="parent2Section">Parent 2</h5>
 						<div class="row">	
 							<div class="col">
-								<label for="Parent2">Parent 2</label>
+								<label for="Parent2">Name</label>
 								<input type="parent2" class="form-control" id="Parent2" name="Parent2" placeholder="Respondent">
 							</div>
 							<div class="col">
-								<label for="parent2State">Parent 2 State</label>
+								<label for="parent2Status">Status</label>
+								<select class="form-control" id="parent2Status" name="parent2Status">
+									<option value="0">N/A</option>
+									<option value="1">Claimant</option>
+									<option value="2">Respondent</option>
+								</select>
+							</div>
+						</div>
+					
+						<div class="row">
+							<div class="col">
+								<label class="lab" for="parent2State">State</label>
 								<select class="form-control" id="parent2State" name="parent2State">
 									<option value="">Select a state</option>
 									<option value="1">Florida</option>
@@ -122,9 +206,6 @@
 									<option value="3">Virginia</option>
 								</select>
 							</div>
-						</div>
-					
-						<div class="row">	
 							<div class="col">
 								<label class="lab" for="parent2Jurisdiction">Case 2's claimed jurisdiction</label>
 								<select class="form-control" id="parent2Jurisdiction" name="parent2Jurisdiction">
@@ -135,22 +216,23 @@
 								<small id="parent2JurisdictionHelp" class="form-text text-muted">Jurisdiction for parent 2's case</small>
 							</div>
 						</div>
+
+						<div class="row">
+							<div class="col">
+								<label class="form-check-label" for="checkParent2">Case 2 retains jurisdiction?</label>
+								<div class="form-check">
+									<input id="checkParent2" name="checkParent" class="form-check-input" type="radio" value="2"> Jurisdiction retained
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<div class="form-group gform-group border-top">
 						<div class="row">	
 							<div class="col">
-								<label class="form-check-label" for="checks">
-									Jurisdiction retained in:
-								</label>
+								<label class="form-check-label" for="checkParentNA">No jurisdiction retained</label>
 								<div class="form-check">
 									<input id="checkParentNA" name="checkParent" class="form-check-input" type="radio" value="0" checked> N/A
-								</div>
-								<div class="form-check">
-									<input id="checkParent1" name="checkParent" class="form-check-input" type="radio" value="1"> Parent 1's case
-								</div>
-								<div class="form-check">
-									<input id="checkParent2" name="checkParent" class="form-check-input" type="radio" value="2"> Parent 2's case
 								</div>
 							</div>
 						</div>
@@ -264,6 +346,8 @@
 		success: "valid"
 	});
 
+	
+
 	jQuery.validator.addMethod("lessThan",  // Checking valid start/end dates
 		function(value, element, params) {
 			// console.log($(params).val().length);
@@ -306,6 +390,52 @@
 
 
 	var gform1 = $( "#TheForm" );
+
+	function exFunction() {
+        // if ($("#ex1a").checked) {alert("dink")}
+		// console.log($('#ex1a').val());
+		$('input:radio[name="ex1"]').change(
+			function(){
+				if (this.checked && this.value == '0') {
+					// console.log(this.value);
+					$('#ex2').val(this.value);
+					$('#ex2').css({'color':'red'});
+				} else if (this.checked && this.value == '1'){
+					// console.log(this.value);
+					$('#ex2').val(this.value);
+					$('#ex2').css({'color':'green'});
+				}
+			}
+		);
+	}
+
+	function jurisFunction() {
+        
+		var start = $('#startDate').val();
+		var startPrev = $('#startPrevDate').val();
+		var end = $('#endDate').val();
+		const Start = new Date(start);
+		const StartPrev = new Date(startPrev);
+		const End = new Date(end);
+		var Diff = new Date(End - Start);
+		var DiffPrev = new Date(Start - StartPrev);
+		var months = Diff.getMonth();
+		var monthsPrev = DiffPrev.getMonth();
+		var monthDiff = End.getMonth() - Start.getMonth() + (12 * (End.getFullYear() - Start.getFullYear()));
+		var monthPrevDiff = Start.getMonth() - StartPrev.getMonth() + (12 * (Start.getFullYear() - StartPrev.getFullYear()));
+		// console.log(monthDiff);
+		if (monthDiff >= 6){
+			$('#ex3').val("Exclusive, continuing in " + $("#childState :selected").text());
+			$('#ex3').css({'color':'green'});
+		} else if (monthPrevDiff >= 6){
+			$('#ex3').val("Exclusive, continuing in " + $("#childPrevState :selected").text());
+			$('#ex3').css({'color':'green'});
+		} else {
+			$('#ex3').val("No valid exclusive, continuing cases.");
+			$('#ex3').css({'color':'grey'});
+		}
+	}
+
 	gform1.validate({
 		rules:{
 			Child: 'required',
@@ -356,13 +486,18 @@
 			};
 
 			var start = $('#startDate').val();
+			var startPrev = $('#startPrevDate').val();
 			var end = $('#endDate').val();
 			const Start = new Date(start);
+			const StartPrev = new Date(startPrev);
 			const End = new Date(end);
 			// end - start returns difference in milliseconds 
 			var Diff = new Date(End - Start);
+			var DiffPrev = new Date(Start - StartPrev);
 			// console.log(Date(Diff));
 			var Days = Diff/1000/60/60/24;
+			var DaysPrev = DiffPrev/1000/60/60/24;
+			// console.log(Diff.getMonth());
 
 			////////////////////////////
 			// Put the graph together //
@@ -374,13 +509,16 @@
 			if (Days >= residency_req_dict[$('#childState :selected').text()]) {
 				// prep_string = prep_string + "," + $('#childState :selected').text() + "-IsResidenceOf-" + $('#Child').val();
 				prep_string = prep_string + formatVEV('#Child', "IsResidentOf", '#childState :selected', v1type="val", v2type="text");
+			} else if (DaysPrev >= residency_req_dict[$('#childPrevState :selected').text()]) {
+				prep_string = prep_string + formatVEV('#Child', "IsResidentOf", '#childPrevState :selected', v1type="val", v2type="text");
 			}
+			
 
 			// Parents
 			juris_dict = {1:"HasHomeState", 2:"HasExclusiveContinuing"};
 			if ($('#Parent1').val().length!=0){
 				prep_string = prep_string + formatVEV('#Parent1', "IsParentOf", '#Child');
-				prep_string = prep_string + formatVEV('#Parent1', "IsClaimantOf", '#Child');
+				
 				if ($('#parent1State').val()!=0){
 					prep_string = prep_string + formatVEV('#Parent1', "IsFrom", '#parent1State option:selected', v1type="val", v2type="text");
 					if ($('#parent1Jurisdiction :selected').val()!=0){
@@ -392,11 +530,16 @@
 						}
 					}
 				}
+				if ($('#parent1Status :selected').val()==1){
+					prep_string = prep_string + formatVEV('#Parent1', "IsClaimantOf", '#Child');
+				} else if ($('#parent1Status :selected').val()==2){
+					prep_string = prep_string + formatVEV('#Parent1', "IsRespondentOf", '#Child');
+				}
 			}
 
 			if ($('#Parent2').val().length!=0){
 				prep_string = prep_string + formatVEV('#Parent2', "IsParentOf", '#Child');
-				prep_string = prep_string + formatVEV('#Parent2', "IsRespondentOf", '#Child');
+
 				if ($('#parent2State').val()!=0){
 					prep_string = prep_string + formatVEV('#Parent2', "IsFrom", '#parent2State :selected', v1type="val", v2type="text");
 					if ($('#parent2Jurisdiction :selected').val()!=0){
@@ -407,6 +550,18 @@
 						}
 					}
 				}
+				if ($('#parent2Status :selected').val()==1){
+					prep_string = prep_string + formatVEV('#Parent2', "IsClaimantOf", '#Child');
+				} else if ($('#parent2Status :selected').val()==2){
+					prep_string = prep_string + formatVEV('#Parent2', "IsRespondentOf", '#Child');
+				}
+			}
+
+			const checkP = $('input[name=checkParent]:checked').val(); // Which parent retains jurisdiction?
+			if (checkP=="1" && $('#parent2Jurisdiction').val() == "2"){
+				prep_string = prep_string + formatVEV('#parent2State :selected',"DeferredTo",'#parent1State :selected', v1type="text", v2type="text");
+			} else if (checkP=="2" && $('#parent1Jurisdiction').val() == "2"){
+				prep_string = prep_string + formatVEV('#parent1State :selected',"DeferredTo",'#parent2State :selected', v1type="text", v2type="text");
 			}
 
 			////////////////////////////////////

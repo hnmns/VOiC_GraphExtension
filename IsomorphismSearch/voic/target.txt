@@ -4,8 +4,7 @@ Parentoid1>Weebob,HasHomeState
 Parentoid2>Weebob,IsParentOf
 Parentoid2>Virginia,IsFrom
 Parentoid1>Weebob,RetainsJurisdictionOver
-Parentoid1,,Parent
-Weebob,,Child
-Ohio,,State
-Parentoid2,,Parent
 Virginia,,State
+Parentoid1,,Parent
+Parentoid2,,Parent
+Weebob,,Child

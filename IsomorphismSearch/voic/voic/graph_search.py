@@ -4,7 +4,8 @@
 # ev_dict = {"IsParentOf":("Parent","Child"), "IsResidentOf":("Child","State"), "HasExclusiveContinuing":("State","Child"),
 # 	   "HasHomeState":("State","Child"), "LivedIn":("Child","State"), "LastStateGreaterThan12":("Child","State")}
 ev_dict = {"IsParentOf":("Parent","Child"), "IsClaimantOf":("Parent","Child"), "IsRespondentOf":("Parent","Child"), "IsResidentOf":("Child","State"), "HasExclusiveContinuing":("Parent","Child"),
-	   "HasHomeState":("Parent","Child"), "RetainsJurisdictionOver":("Parent","Child"), "LivesIn":("Child","State"), "LivedIn":("Child","State"), "IsFrom":("Parent","State"), "LastStateGreaterThan12":("Child","State")}
+	   "HasHomeState":("Parent","Child"), "RetainsJurisdictionOver":("Parent","Child"), "LivesIn":("Child","State"), "LivedIn":("Child","State"), "IsFrom":("Parent","State"), "LastStateGreaterThan12":("Child","State"),
+        "DeferredTo":("State","State")}
 
 
 def to_GSS_format(g, f_path): # Take a doc graph 'g' and convert it to GSS-readable CSV version.
