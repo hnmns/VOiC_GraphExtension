@@ -33,7 +33,7 @@
 </fieldset>
 
 <div class="modal fade" id="FormModal" tabindex="-1" role="dialog" aria-labelledby="FormModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 
 			<div class="modal-header">
@@ -45,7 +45,7 @@
 
 			<div class="modal-body">
 				<p><small id="headerHelp" class="text-muted">Enter information to automatically generate a search graph.</small></p>
-				<h4 class="modal-title" style="text-decoration: none" id="FormLawLabel">Title 20. Domestic Relations</h4>
+				<!-- <h4 class="modal-title" style="text-decoration: none" id="FormLawLabel">Title 20. Domestic Relations</h4> -->
 				
 				<form id="TheForm" name="TheForm">
 					<!-- <div class="form-group gform-group">
@@ -73,13 +73,13 @@
 						<div class="row">	
 							<div class="col">
 								<label for="Child">Child</label>
-								<input type="Child" class="form-control" id="Child" name="Child" aria-describedby="childHelp" placeholder="Child name">
+								<input type="text" class="form-control" id="Child" name="Child" aria-describedby="childHelp" onkeyup="update_TF_body_state()">
 								<small id="childHelp" class="form-text text-muted">Subject of custody dispute</small>
 							</div>
 							
 							<div class="col">
 								<label for="endDate">Current date</label>
-								<input id="endDate" name="endDate" type="date" class="form-control" onchange="jurisFunction()">
+								<input id="endDate" name="endDate" type="date" class="form-control" onchange="update_TF_body_date()">
 							</div>
 						</div>
 					</div>
@@ -88,7 +88,7 @@
 						<div class="row">	
 							<div class="col">
 								<label for="childState">Child's current state</label>
-								<select class="form-control" id="childState" name="childState">
+								<select class="form-control" id="childState" name="childState" onchange="update_TF_body_state()">
 									<option value="0">Select a state</option>
 									<option value="1">Florida</option>
 									<option value="2">Michigan</option>
@@ -116,20 +116,20 @@
 							</div>
 							<div class="col">
 								<label for="startPrevDate">Previous state arrival date</label>
-								<input id="startPrevDate" name="startPrevDate" type="date" class="form-control" onchange="jurisFunction()">
+								<input id="startPrevDate" name="startPrevDate" type="date" class="form-control" onchange="update_TF_body_state()">
 								<small id="startPrevDateHelp" class="form-text text-muted">Date of child's arrival to previous state</small>
 							</div>
 						</div>
 					</div>
 
-					<div class="form-group gform-group">
+					<!-- <div class="form-group gform-group">
 						<div class="row">
 							<div class="col">
 								<label for="ex3">Exclusive, continuing jurisdiction valid in:</label>
 								<input disabled class="form-control disabled" id="ex3" name="ex3">
 							</div>
 						</div>
-					</div>
+					</div> -->
 
 
 					<div class="form-group gform-group border-top">
@@ -137,7 +137,7 @@
 						<div class="row">	
 							<div class="col">
 								<label for="Parent1">Name</label>
-								<input type="parent1" class="form-control" id="Parent1" name="Parent1" placeholder="Claimant">
+								<input type="parent1" class="form-control" id="Parent1" name="Parent1" placeholder="Claimant" onkeyup="update_TF_body_state()">
 							</div>
 							<div class="col">
 								<label for="parent1Status">Status</label>
@@ -235,6 +235,321 @@
 									<input id="checkParentNA" name="checkParent" class="form-check-input" type="radio" value="0" checked> N/A
 								</div>
 							</div>
+						</div>
+					</div>
+
+					<div class="form-group gform-group border-top">
+						<div class="row">
+							<div class="col">
+								<label class="lab" for="caseLaw">Case law</label>
+								<select class="form-control" id="caseLaw" name="caseLaw" onchange="hs_caseLaw()">
+									<option value="0">Select a case law</option>
+									<option value="1" id="textUCCJEA" selected>Uniform Child Custody Jurisdiction and Enforcement Act (UCCJEA) [§§ 20-146.1 through 20-146.38]</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col justify-content-center">
+							<h4 class="modal-header" id="caseName">
+								Initial child custody jurisdiction
+							</h4>
+						</div>
+					</div>
+
+					<div class="form-group gform-group border-top " id="homeState1" name="homeState1">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title modal-node" style="text-decoration: none" id="homeStateLabel">1. Home-state Jurisdiction</h3>
+							</div>
+							<div class="modal-body">
+								<div class="row d-flex justify-content-between">
+								
+									<div class="col" id="HomeStateBody">
+										a. STATE1 is home state.
+									</div>
+									<div class="col">
+										<div class="form-check form-check-inline">
+											<div class="form-check-input tradio">
+												<input id="tfHomeStateT" name="tfHomeState" class="form-check-input tradio" type="radio" value="1" onchange="update_TF_titles()"> True
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline" >
+											<div class="form-check-input fradio">
+												<input id="tfHomeStateF" name="tfHomeState" class="form-check-input fradio" type="radio" value="0" onchange="update_TF_titles()" checked> False
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline">
+											<div class="form-check-input oradio">
+												<input id="tfHomeStateO" name="tfHomeState" class="form-check-input oradio" type="radio" value="2" onchange="update_TF_titles()"> Override
+											</div>
+										</div>
+									</div>
+								</div>
+							
+
+								<div class="row modal-text-emph">
+									<div class="col">
+										OR
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col" id="PrevStateBody">
+										b. STATE2 is previous home state.
+									</div>
+									<!-- <div class="col-6">
+										<div class="form-check form-check-inline">
+											<div class="form-check-input tradio">
+												<input id="tfPrevHomeStateT" name="tfPrevHomeState" class="form-check-input tradio" type="radio" value="1" onchange="update_TF_titles()"> True
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline" >
+											<div class="form-check-input fradio">
+												<input id="tfPrevHomeStateF" name="tfPrevHomeState" class="form-check-input fradio" type="radio" value="0" onchange="update_TF_titles()" checked> False
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline">
+											<div class="form-check-input oradio">
+												<input id="tfPrevHomeStateO" name="tfPrevHomeState" class="form-check-input oradio" type="radio" value="2" onchange="update_TF_titles()"> Override
+											</div>
+										</div>
+									</div> -->
+								</div>
+
+								<div class="row">
+									<div class="col offset-1" id="PrevStateCurrentDate">
+										i. Within six months of N/A.
+									</div>
+									<div class="col-6">
+										<div class="form-check-inline">
+											<div class="form-check-input tradio">
+												<input id="tfPrevHomeStateDateT" name="tfPrevHomeStateDate" class="form-check-input tradio" type="radio" value="1" onchange="update_TF_titles()"> True
+											</div>
+										</div>
+									
+										<div class="form-check-inline" >
+											<div class="form-check-input fradio">
+												<input id="tfPrevHomeStateDateF" name="tfPrevHomeStateDate" class="form-check-input fradio" type="radio" value="0" onchange="update_TF_titles()" checked> False
+											</div>
+										</div>
+									
+										<div class="form-check-inline">
+											<div class="form-check-input oradio">
+												<input id="tfPrevHomeStateDateO" name="tfPrevHomeStateDate" class="form-check-input oradio" type="radio" value="2" onchange="update_TF_titles()"> Override
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row modal-text-emph">
+									<div class="col offset-1">
+										AND
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col offset-1" id="PrevStateAbsent">
+										ii. CHILD is absent from STATE2
+									</div>
+									<div class="col-6">
+										<div class="form-check form-check-inline">
+											<div class="form-check-input tradio">
+												<input id="tfPrevHomeStateAbsentT" name="tfPrevHomeStateAbsent" class="form-check-input tradio" type="radio" value="1" onchange="update_TF_titles()"> True
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline" >
+											<div class="form-check-input fradio">
+												<input id="tfPrevHomeStateAbsentF" name="tfPrevHomeStateAbsent" class="form-check-input fradio" type="radio" value="0" onchange="update_TF_titles()" checked> False
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline">
+											<div class="form-check-input oradio">
+												<input id="tfPrevHomeStateAbsentO" name="tfPrevHomeStateAbsent" class="form-check-input oradio" type="radio" value="2" onchange="update_TF_titles()"> Override
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row modal-text-emph">
+									<div class="col offset-1">
+										AND
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col offset-1" id="PrevStateParentIn">
+										iii. PARENT1 lives in STATE2.
+									</div>
+									<div class="col-6">
+										<div class="form-check form-check-inline">
+											<div class="form-check-input tradio">
+												<input id="tfPrevHomeStateParentInT" name="tfPrevHomeStateParentIn" class="form-check-input tradio" type="radio" value="1" onchange="update_TF_titles()"> True
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline" >
+											<div class="form-check-input fradio">
+												<input id="tfPrevHomeStateParentInF" name="tfPrevHomeStateParentIn" class="form-check-input fradio" type="radio" value="0" onchange="update_TF_titles()" checked> False
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline">
+											<div class="form-check-input oradio">
+												<input id="tfPrevHomeStateParentInO" name="tfPrevHomeStateParentIn" class="form-check-input oradio" type="radio" value="2" onchange="update_TF_titles()"> Override
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					<div class="row modal-text-emph" id="or1">
+						<div class="col">OR</div>
+					</div>
+
+					<div class="form-group gform-group border-top " id="exCont1" name="exCont1">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title modal-node" style="text-decoration: none" id="exContLabel">2. Exclusive, Continuing Jurisdiction</h3>
+							</div>
+							<div class="modal-body">
+								<div class="row d-flex justify-content-between">
+								
+									<div class="col" id="ExCont">
+										a. STATE2 has exclusive, continuing jurisdiction.
+									</div>
+									<div class="col">
+										<div class="form-check form-check-inline">
+											<div class="form-check-input tradio">
+												<input id="tfExContT" name="tfExCont" class="form-check-input tradio" type="radio" value="1" onchange="update_TF_titles()"> True
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline" >
+											<div class="form-check-input fradio">
+												<input id="tfExContF" name="tfExCont" class="form-check-input fradio" type="radio" value="0" onchange="update_TF_titles()" checked> False
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline">
+											<div class="form-check-input oradio">
+												<input id="tfExContO" name="tfExCont" class="form-check-input oradio" type="radio" value="2" onchange="update_TF_titles()" > Override
+											</div>
+										</div>
+									</div>
+								</div>
+							
+
+								<div class="row modal-text-emph">
+									<div class="col">
+										AND
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col" id="ExContDeclined">
+										b. STATE2 declined jurisdiction in favor of STATE1.
+									</div>
+									<div class="col-6">
+										<div class="form-check form-check-inline">
+											<div class="form-check-input tradio">
+												<input id="tfExContDeclinedT" name="tfExContDeclined" class="form-check-input tradio" type="radio" value="1" onchange="update_TF_titles()"> True
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline" >
+											<div class="form-check-input fradio">
+												<input id="tfExContDeclinedF" name="tfExContDeclined" class="form-check-input fradio" type="radio" value="0" onchange="update_TF_titles()" checked> False
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline">
+											<div class="form-check-input oradio">
+												<input id="tfExContDeclinedO" name="tfExContDeclined" class="form-check-input oradio" type="radio" value="2" onchange="update_TF_titles()" > Override
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row modal-text-emph">
+									<div class="col">
+										AND
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col" id="ExContConnect">
+										c. CHILD and PARENT1 have significant connection.
+									</div>
+									<div class="col-6">
+										<div class="form-check form-check-inline">
+											<div class="form-check-input tradio">
+												<input id="tfExContConnectT" name="tfExContConnect" class="form-check-input tradio" type="radio" value="1" onchange="update_TF_titles()"> True
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline" >
+											<div class="form-check-input fradio">
+												<input id="tfExContConnectF" name="tfExContConnect" class="form-check-input fradio" type="radio" value="0" onchange="update_TF_titles()" checked> False
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline">
+											<div class="form-check-input oradio">
+												<input id="tfExContConnectO" name="tfExContConnect" class="form-check-input oradio" type="radio" value="2" onchange="update_TF_titles()"> Override
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row modal-text-emph">
+									<div class="col">
+										AND
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col" id="SubEvidenceBody">
+										d. Substantial evidence present in STATE1.
+									</div>
+									<div class="col-6">
+										<div class="form-check form-check-inline">
+											<div class="form-check-input tradio">
+												<input id="tfExContEvidenceT" name="tfExContEvidence" class="form-check-input tradio" type="radio" value="1" onchange="update_TF_titles()"> True
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline" >
+											<div class="form-check-input fradio">
+												<input id="tfExContEvidenceF" name="tfExContEvidence" class="form-check-input fradio" type="radio" value="0" onchange="update_TF_titles()" checked> False
+											</div>
+										</div>
+									
+										<div class="form-check form-check-inline">
+											<div class="form-check-input oradio">
+												<input id="tfExContEvidenceO" name="tfExContEvidence" class="form-check-input oradio" type="radio" value="2" onchange="update_TF_titles()" > Override
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="row" id="tfCheckSection">
+						<div class="col">
+							<input type="checkbox" id="tfCheck" name="tfCheck">
+							<label for="tfCheck">Use T/F form to populate graph?</label>
 						</div>
 					</div>
 
@@ -341,11 +656,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script>
+
 	jQuery.validator.setDefaults({
 		debug: true,
 		success: "valid"
 	});
-
 	
 
 	jQuery.validator.addMethod("lessThan",  // Checking valid start/end dates
@@ -409,8 +724,7 @@
 		);
 	}
 
-	function jurisFunction() {
-        
+	function jurisFunction() { // Validation for legally/physically plausible inputs
 		var start = $('#startDate').val();
 		var startPrev = $('#startPrevDate').val();
 		var end = $('#endDate').val();
@@ -425,16 +739,133 @@
 		var monthPrevDiff = Start.getMonth() - StartPrev.getMonth() + (12 * (Start.getFullYear() - StartPrev.getFullYear()));
 		// console.log(monthDiff);
 		if (monthDiff >= 6){
-			$('#ex3').val("Exclusive, continuing in " + $("#childState :selected").text());
+			$('#ex3').val("Exclusive, continuing in " + $("#childState:selected").text());
 			$('#ex3').css({'color':'green'});
 		} else if (monthPrevDiff >= 6){
-			$('#ex3').val("Exclusive, continuing in " + $("#childPrevState :selected").text());
+			$('#ex3').val("Exclusive, continuing in " + $("#childPrevState:selected").text());
 			$('#ex3').css({'color':'green'});
 		} else {
 			$('#ex3').val("No valid exclusive, continuing cases.");
 			$('#ex3').css({'color':'grey'});
 		}
 	}
+
+	/////////////////////////////
+	// Hide/Show New Fill Form //
+	/////////////////////////////
+
+	function hs_caseLaw(){ // Hide or show the jurisdiction T/F form
+		const caseVal = $('#caseLaw').val();
+		// console.log($('#caseLaw:selected'));
+		console.log(caseVal);
+		if (caseVal==0){
+			// $('#HomeState1').css({'visibility':'visible'});
+			$("#homeState1").addClass('d-none');
+			$("#exCont1").addClass('d-none');
+			$("#caseName").addClass('d-none');
+			$("#or1").addClass('d-none');
+			$("#tfCheckSection").addClass('d-none');
+		} else if (caseVal==1){
+			// $('#HomeState1').css({'visibility':'hidden'});
+			$("#homeState1").removeClass('d-none');
+			$("#exCont1").removeClass('d-none');
+			$("#caseName").removeClass('d-none');
+			$("#or1").removeClass('d-none');
+			$("#tfCheckSection").removeClass('d-none');
+		}
+	}
+
+	/////////////////////////////
+	// Update the T/F Forms    // 
+	/////////////////////////////
+	function update_TF_body_state(){
+		const state1 = $("#childState :selected").text();
+		const state2 = $("#childPrevState :selected").text();
+		const child = $('#Child').val();
+		const parent1 = $('#Parent1').val();
+		const parent2 = $('#Parent2').val();
+		
+		if (state1!='Select a state'){
+			// console.log(s1);
+			$('#HomeStateBody').text("a. " + state1 +" is home state");
+			$('#PrevStateBody').text("b. " + state2 +" is previous home state");
+			$('#SubEvidenceBody').text("d. Substantial evidence present in " + state1);
+			
+			$('#PrevStateParentIn').text("iii. "+parent1+" lives in "+state2);
+		} else {
+			$('#HomeStateBody').text("a. N/A is home state");
+			$('#PrevStateBody').text("b. N/A is previous home state");
+			$('#SubEvidenceBody').text("d. Substantial evidence present in N/A");
+			$('#PrevStateParentIn').text("iii. PARENT1 lives in N/A");
+		}
+
+		if (child!=""){
+			$('#ExContConnect').text("c. " + child +" and "+parent1+" have significant connection");
+		} else {
+			$('#ExContConnect').text("c. CHILD and PARENT1 have significant connection");
+		}
+
+		if (state2!='Select a state'){
+			$('#PrevStateAbsent').text("ii. "+child+" is absent from "+state2);
+			$('#ExCont').text("a. "+state2+" has exclusive, continuing jurisdiction");
+			$('#ExContDeclined').text("b. "+state2+" declined jurisdiction in favor of "+state1);
+		} else {
+			$('#PrevStateAbsent').text("ii. CHILD is absent from N/A");
+			$('#ExCont').text("a. N/A has exclusive, continuing jurisdiction");
+			$('#ExContDeclined').text("b. N/A declined jurisdiction in favor of N/A");
+		}
+	}
+
+	function update_TF_body_date(){
+		const start = $('#startDate').val();
+		const startPrev = $('#startPrevDate').val();
+		const end = $('#endDate').val();
+
+		$('#PrevStateCurrentDate').text("i. Within six months of " + end);
+	}
+
+
+	function update_TF_titles(){
+		const qa = $('input[name=tfHomeState]:checked').val()=="1";
+		const qb = $('input[name=tfPrevHomeState]:checked').val()=="1";
+		const qbi = $('input[name=tfPrevHomeStateDate]:checked').val()=="1";
+		const qbii = $('input[name=tfPrevHomeStateAbsent]:checked').val()=="1";
+		const qbiii = $('input[name=tfPrevHomeStateParentIn]:checked').val()=="1";
+		const qs = [qa,qb,qbi,qbii,qbiii];
+		const is_q = (qa || (qbi && qbii && qbiii));
+		// console.log(is_q);
+		// console.log("100");
+		if (is_q=="1"){
+			$('#homeStateLabel').css({'color':'green'});
+		} else {
+			$('#homeStateLabel').css({'color':'red'});
+		}
+
+		const ra = $('input[name=tfExCont]:checked').val();
+		const rb = $('input[name=tfExContDeclined]:checked').val();
+		const rc = $('input[name=tfExContConnect]:checked').val();
+		const rd = $('input[name=tfExContEvidence]:checked').val();
+		const rs = [ra,rb,rc,rd];
+		const is_r = rs.every( (val, i, arr) => val === "1" );
+		if (is_r){
+			$('#exContLabel').css({'color':'green'});
+		} else {
+			$('#exContLabel').css({'color':'red'});
+		}
+
+		if (is_q || is_r){
+			// console.log("Here");
+			$('#caseName').css({'color':'green'});
+		} else {
+			$('#caseName').css({'color':'red'});
+		}
+
+	}
+	
+
+	////////////////////
+	// (OLD) VALIDATE //
+	////////////////////
 
 	gform1.validate({
 		rules:{
@@ -474,17 +905,16 @@
 		return "," + V1 + "-" + e + "-" + V2;
 	}
 
-	$('#auto_string_btn').click(function(){
-		if (gform1.valid()){
-			const residency_req_dict = {
-				"Florida" : 183,
-				"Michigan" : 183,
-				"Virginia" : 183,
-				"Idaho" : 270,
-				"Hawaii" : 200,
-				// Add a wildcard default of 183 days??
-			};
 
+	// Submit the form
+	$('#auto_string_btn').click(function(){
+		
+			//////////////////////
+			// T/F Form Version //
+			//////////////////////
+		let checkbox = document.getElementById("tfCheck");
+		// console.log(checkbox.checked); // it returns Boolean value
+		if (checkbox.checked){
 			var start = $('#startDate').val();
 			var startPrev = $('#startPrevDate').val();
 			var end = $('#endDate').val();
@@ -494,86 +924,173 @@
 			// end - start returns difference in milliseconds 
 			var Diff = new Date(End - Start);
 			var DiffPrev = new Date(Start - StartPrev);
+			var months = Diff.getMonth();
+			var monthsPrev = DiffPrev.getMonth();
+			var monthDiff = End.getMonth() - Start.getMonth() + (12 * (End.getFullYear() - Start.getFullYear()));
 			// console.log(Date(Diff));
 			var Days = Diff/1000/60/60/24;
 			var DaysPrev = DiffPrev/1000/60/60/24;
-			// console.log(Diff.getMonth());
 
-			////////////////////////////
-			// Put the graph together //
-			////////////////////////////
-			var prep_string = "graph:"; // Build graph search string from here
+			const child = $('#Child').val();
+			const state1 = $('#childState :selected').text();
+			const state2 = $('#childPrevState :selected').text();
+			const parent1 = $('#Parent1').val();
+			const parent2 = $('#Parent2').val();
+			console.log(parent1);
+			console.log(parent2);
+			// console.log(state1);
+			// console.log($('input[name=tfPrevHomeStateDate]:checked').val());
+			// console.log($('input[name=tfPrevHomeStateDate]:checked').val()=="1");
 
-			prep_string = prep_string + $('#Child').val() + "-LivesIn-" + $('#childState :selected').text();
 
-			if (Days >= residency_req_dict[$('#childState :selected').text()]) {
-				// prep_string = prep_string + "," + $('#childState :selected').text() + "-IsResidenceOf-" + $('#Child').val();
-				prep_string = prep_string + formatVEV('#Child', "IsResidentOf", '#childState :selected', v1type="val", v2type="text");
-			} else if (DaysPrev >= residency_req_dict[$('#childPrevState :selected').text()]) {
-				prep_string = prep_string + formatVEV('#Child', "IsResidentOf", '#childPrevState :selected', v1type="val", v2type="text");
+			// Different graph syntax now.
+			// Need to use T/F instead.
+			var prep_string = "";
+			
+			// Home-state
+			if ($('input[name=tfHomeState]:checked', "#TheForm").val()=="1") { // "is home state" checked
+				prep_string = prep_string+","+child+"-IsResidentOf-"+state1;
+			} else {
+				if ($('input[name=tfPrevHomeState]:checked').val()=="1") { // "is previous home state" checked
+					prep_string = prep_string+","+child+"-IsPreviousResidentOf-"+state2;
+				}
+				if ($('input[name=tfPrevHomeStateDate]:checked').val()=="1") { // "is previous home state" checked
+					//monthdiff
+					// if (monthDiff>=6){
+					prep_string = prep_string+","+child+"-WithinSixMonthsLivedIn-"+state2;
+					// }
+				}
+				
+				if ($('input[name=tfPrevHomeStateAbsent]:checked').val()=="1") { // "is previous home state" checked
+					prep_string = prep_string+","+child+"-IsAbsentFrom-"+state2;
+				}
+				
+				if ($('input[name=tfPrevHomeStateParentIn]:checked').val()=="1") { // "is previous home state" checked
+					prep_string = prep_string+","+parent2+"-LivesIn-"+state2;
+				}
 			}
+
+			// Exclusive, continuing
+			if ($('input[name=tfExCont]:checked', "#TheForm").val()=="1") {
+				prep_string = prep_string+","+state2+"-HasExclusiveContinuing-"+child;
+			}
+			if ($('input[name=tfExContDeclined]:checked', "#TheForm").val()=="1") {
+				prep_string = prep_string+","+state2+"-Declined-"+"ExclusiveContinuing";
+			}
+			if ($('input[name=tfExContConnect]:checked', "#TheForm").val()=="1") {
+				prep_string = prep_string+","+parent1+"-HasStrongConnection-"+child;
+			}
+			if ($('input[name=tfExContEvidence]:checked', "#TheForm").val()=="1") {
+				prep_string = prep_string+","+state1+"-Has-"+"SubstantialEvidence";
+			}
+
 			
 
-			// Parents
-			juris_dict = {1:"HasHomeState", 2:"HasExclusiveContinuing"};
-			if ($('#Parent1').val().length!=0){
-				prep_string = prep_string + formatVEV('#Parent1', "IsParentOf", '#Child');
-				
-				if ($('#parent1State').val()!=0){
-					prep_string = prep_string + formatVEV('#Parent1', "IsFrom", '#parent1State option:selected', v1type="val", v2type="text");
-					if ($('#parent1Jurisdiction :selected').val()!=0){
-						var jurisdiction1 = juris_dict[$('#parent1Jurisdiction :selected').val()];
-						prep_string = prep_string + formatVEV('#Parent1', jurisdiction1, '#Child', v1type="val", v2type="val");
-						console.log($('input[name=checkParent]:checked', '#TheForm').val());
-						if ($('input[name=checkParent]:checked', '#TheForm').val()=="1"){
-							prep_string = prep_string + formatVEV('#Parent1', "RetainsJurisdictionOver", '#Child', v1type="val", v2type="val");
-						}
-					}
-				}
-				if ($('#parent1Status :selected').val()==1){
-					prep_string = prep_string + formatVEV('#Parent1', "IsClaimantOf", '#Child');
-				} else if ($('#parent1Status :selected').val()==2){
-					prep_string = prep_string + formatVEV('#Parent1', "IsRespondentOf", '#Child');
-				}
-			}
 
-			if ($('#Parent2').val().length!=0){
-				prep_string = prep_string + formatVEV('#Parent2', "IsParentOf", '#Child');
-
-				if ($('#parent2State').val()!=0){
-					prep_string = prep_string + formatVEV('#Parent2', "IsFrom", '#parent2State :selected', v1type="val", v2type="text");
-					if ($('#parent2Jurisdiction :selected').val()!=0){
-						var jurisdiction2 = juris_dict[$('#parent2Jurisdiction :selected').val()];
-						prep_string = prep_string + formatVEV('#Parent2', jurisdiction2, '#Child', v1type="val", v2type="val");
-						if ($('input[name=checkParent]:checked', '#TheForm').val()=="2"){
-							prep_string = prep_string + formatVEV('#Parent2', "RetainsJurisdictionOver", '#Child', v1type="val", v2type="val");
-						}
-					}
-				}
-				if ($('#parent2Status :selected').val()==1){
-					prep_string = prep_string + formatVEV('#Parent2', "IsClaimantOf", '#Child');
-				} else if ($('#parent2Status :selected').val()==2){
-					prep_string = prep_string + formatVEV('#Parent2', "IsRespondentOf", '#Child');
-				}
-			}
-
-			const checkP = $('input[name=checkParent]:checked').val(); // Which parent retains jurisdiction?
-			if (checkP=="1" && $('#parent2Jurisdiction').val() == "2"){
-				prep_string = prep_string + formatVEV('#parent2State :selected',"DeferredTo",'#parent1State :selected', v1type="text", v2type="text");
-			} else if (checkP=="2" && $('#parent1Jurisdiction').val() == "2"){
-				prep_string = prep_string + formatVEV('#parent1State :selected',"DeferredTo",'#parent2State :selected', v1type="text", v2type="text");
-			}
-
-			////////////////////////////////////
-			// Submit/paste to the search bar //
-			////////////////////////////////////
+			// Clean up graph
+			prep_string = "graph:" + prep_string.slice(1);
+			// "Submit" the form
 			$('#FormModal').modal('hide');
-			// $('#search_bar').val(prep_string.toLowerCase());
-			$('#search_bar').val(prep_string); // Do not want edges put to lowercase...
+			$('#search_bar').val(prep_string);
 
-		}
-		else{
-			// Does anything even need to go here???
+		} else { // Use T/F form
+			if (gform1.valid()){
+				const residency_req_dict = {
+					"Florida" : 183,
+					"Michigan" : 183,
+					"Virginia" : 183,
+					"Idaho" : 270,
+					"Hawaii" : 200,
+					// Add a wildcard default of 183 days??
+				};
+
+				var start = $('#startDate').val();
+				var startPrev = $('#startPrevDate').val();
+				var end = $('#endDate').val();
+				const Start = new Date(start);
+				const StartPrev = new Date(startPrev);
+				const End = new Date(end);
+				// end - start returns difference in milliseconds 
+				var Diff = new Date(End - Start);
+				var DiffPrev = new Date(Start - StartPrev);
+				// console.log(Date(Diff));
+				var Days = Diff/1000/60/60/24;
+				var DaysPrev = DiffPrev/1000/60/60/24;
+				// console.log(Diff.getMonth());
+
+				////////////////////////////
+				// Put the graph together //
+				////////////////////////////
+				var prep_string = "graph:"; // Build graph search string from here
+
+				prep_string = prep_string + $('#Child').val() + "-LivesIn-" + $('#childState :selected').text();
+
+				if (Days >= residency_req_dict[$('#childState :selected').text()]) {
+					// prep_string = prep_string + "," + $('#childState :selected').text() + "-IsResidenceOf-" + $('#Child').val();
+					prep_string = prep_string + formatVEV('#Child', "IsResidentOf", '#childState :selected', v1type="val", v2type="text");
+				} else if (DaysPrev >= residency_req_dict[$('#childPrevState :selected').text()]) {
+					prep_string = prep_string + formatVEV('#Child', "IsResidentOf", '#childPrevState :selected', v1type="val", v2type="text");
+				}
+				
+
+				// Parents
+				juris_dict = {1:"HasHomeState", 2:"HasExclusiveContinuing"};
+				if ($('#Parent1').val().length!=0){
+					prep_string = prep_string + formatVEV('#Parent1', "IsParentOf", '#Child');
+					
+					if ($('#parent1State').val()!=0){
+						prep_string = prep_string + formatVEV('#Parent1', "IsFrom", '#parent1State option:selected', v1type="val", v2type="text");
+						if ($('#parent1Jurisdiction :selected').val()!=0){
+							var jurisdiction1 = juris_dict[$('#parent1Jurisdiction :selected').val()];
+							prep_string = prep_string + formatVEV('#Parent1', jurisdiction1, '#Child', v1type="val", v2type="val");
+							console.log($('input[name=checkParent]:checked', '#TheForm').val());
+							if ($('input[name=checkParent]:checked', '#TheForm').val()=="1"){
+								prep_string = prep_string + formatVEV('#Parent1', "RetainsJurisdictionOver", '#Child', v1type="val", v2type="val");
+							}
+						}
+					}
+					if ($('#parent1Status :selected').val()==1){
+						// prep_string = prep_string + formatVEV('#Parent1', "IsClaimantOf", '#Child');
+					} else if ($('#parent1Status :selected').val()==2){
+						// prep_string = prep_string + formatVEV('#Parent1', "IsRespondentOf", '#Child');
+					}
+				}
+
+				if ($('#Parent2').val().length!=0){
+					prep_string = prep_string + formatVEV('#Parent2', "IsParentOf", '#Child');
+
+					if ($('#parent2State').val()!=0){
+						prep_string = prep_string + formatVEV('#Parent2', "IsFrom", '#parent2State :selected', v1type="val", v2type="text");
+						if ($('#parent2Jurisdiction :selected').val()!=0){
+							var jurisdiction2 = juris_dict[$('#parent2Jurisdiction :selected').val()];
+							prep_string = prep_string + formatVEV('#Parent2', jurisdiction2, '#Child', v1type="val", v2type="val");
+							if ($('input[name=checkParent]:checked', '#TheForm').val()=="2"){
+								prep_string = prep_string + formatVEV('#Parent2', "RetainsJurisdictionOver", '#Child', v1type="val", v2type="val");
+							}
+						}
+					}
+					if ($('#parent2Status :selected').val()==1){
+						// prep_string = prep_string + formatVEV('#Parent2', "IsClaimantOf", '#Child');
+					} else if ($('#parent2Status :selected').val()==2){
+						// prep_string = prep_string + formatVEV('#Parent2', "IsRespondentOf", '#Child');
+					}
+				}
+
+				const checkP = $('input[name=checkParent]:checked').val(); // Which parent retains jurisdiction?
+				if (checkP=="1" && $('#parent2Jurisdiction').val() == "2"){
+					prep_string = prep_string + formatVEV('#parent2State :selected',"DeferredTo",'#parent1State :selected', v1type="text", v2type="text");
+				} else if (checkP=="2" && $('#parent1Jurisdiction').val() == "2"){
+					prep_string = prep_string + formatVEV('#parent1State :selected',"DeferredTo",'#parent2State :selected', v1type="text", v2type="text");
+				}
+
+				////////////////////////////////////
+				// Submit/paste to the search bar //
+				////////////////////////////////////
+				$('#FormModal').modal('hide');
+				// $('#search_bar').val(prep_string.toLowerCase());
+				$('#search_bar').val(prep_string); // Do not want edges put to lowercase...
+			}	
+		
 		}
 	});
 

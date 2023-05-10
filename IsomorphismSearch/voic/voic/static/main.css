@@ -8,14 +8,44 @@ h1, h2, h3, h4, h5, h6 {
   color: #444655;
 }
 
+/* .d-flex{
+
+} */
+
 .modal-title {
 	font-weight: bolder;
 	text-decoration: underline;
 }
 
+.modal-content {
+	font-weight: normal;
+
+}
+
+.modal-node {
+	color: red;
+}
+
+.modal-text-emph {
+	font-weight: bold;
+}
+
+.tradio{
+	color:rgb(42, 229, 25);
+	accent-color: rgb(42, 229, 25);
+}
+.fradio {
+	color: red;
+	accent-color: red;
+}
+.oradio {
+	color:rgb(37, 82, 196);
+	accent-color:rgb(37, 82, 196);
+}
+
+
 .error {
 	color: red;
-	/* background-color: #acf; */
  }
 
 .lab {
