@@ -10,11 +10,7 @@ ev_dict = {"IsParentOf":("Parent","Child"), "IsClaimantOf":("Parent","Child"), "
 
 def to_GSS_format(g, f_path): # Take a doc graph 'g' and convert it to GSS-readable CSV version.
     
-    
-
     vevs = g.split(',')
-    # vevs = g
-    # print(vevs)
 	
     # Just compile a big, "\n"-escaped string and dump it all in at the end.
     with open(f_path, mode="w") as file: # Dump the new graph into the file that we use when calling GSS, whether pattern.txt or target.txt
@@ -25,9 +21,6 @@ def to_GSS_format(g, f_path): # Take a doc graph 'g' and convert it to GSS-reada
 
         insertion = ""
         insertion_vtypes = ""
-        # constants = [] # verts in ""
-        # Need to fix/edit target graphs or the search so that constants are accounted for...
-        print(vevs)
         for vev in vevs:
             temp = vev.split('-')
             edge = temp[1] # At index 1, we have the edge.
@@ -37,10 +30,6 @@ def to_GSS_format(g, f_path): # Take a doc graph 'g' and convert it to GSS-reada
             try:
                 vert_types = ev_dict[edge] # Get the vertex types that we expect with that edge.
                 insertion_vtype1, insertion_vtype2 = ["",""] # Init empty
-                # if (temp[0][0]!="\"" or temp[0][-1]!="\""): # Check if not constant
-                #     insertion_vtype1 = "{},,{}\n".format(temp[0],vert_types[0])
-                # if (temp[2][0]!="\"" or temp[2][-1]!="\""):
-                #     insertion_vtype2 = "{},,{}\n".format(temp[2],vert_types[1])
                 insertion_vtype1 = "{},,{}\n".format(temp[0],vert_types[0])
                 insertion_vtype2 = "{},,{}\n".format(temp[2],vert_types[1])
                 insertion_vtypes += insertion_vtype1 + insertion_vtype2

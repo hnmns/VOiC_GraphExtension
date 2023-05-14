@@ -1,4 +1,0 @@
-ernest>ernestjr,IsParentOf
-first,third,purple
-ernestjr,,Child
-ernest,,Parent

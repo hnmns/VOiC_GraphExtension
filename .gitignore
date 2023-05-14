@@ -1,4 +1,6 @@
 BACKUP
 ./IsomorphismSearch/voic/glasgow-subgraph-solver
+./IsomorphismSearch/VOiC_Test.ipynb
+./IsomorphismSearch/.ipynb_checkpoints
 run_read_GSS.py
 voic_ws.code-workspace
